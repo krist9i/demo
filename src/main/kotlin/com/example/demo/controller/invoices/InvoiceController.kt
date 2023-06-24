@@ -5,15 +5,8 @@ import com.example.demo.dtos.invoices.InvoiceResponse
 import com.example.demo.service.invoices.InvoiceService
 import com.fasterxml.jackson.databind.JsonNode
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
+import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping("/invoices")
@@ -25,10 +18,14 @@ class InvoiceController(
         return invoiceService.create(invoiceRequest)
     }
 
+    /**
+     * In this case the Request-Body isn't correctly displayed in swagger
+     * The JsonNode will be required as empty {} even if the full requestBody can be filled as InvoiceRequest
+     **/
     @PutMapping("/{uuid}")
     fun update(
             @PathVariable("uuid") uuid: UUID,
-            @RequestBody invoiceUpdateRequest: JsonNode
+            @RequestBody invoiceUpdateRequest: JsonNode,
     ): InvoiceResponse {
         return invoiceService.update(uuid, invoiceUpdateRequest)
     }
